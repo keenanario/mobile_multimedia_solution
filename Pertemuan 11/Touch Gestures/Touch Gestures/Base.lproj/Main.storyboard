@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Touch_Gestures" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yKz-bD-xPK">
+                                <rect key="frame" x="146.66666666666666" y="139" width="99.666666666666657" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 taps detected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NED-UI-Pcs">
+                                <rect key="frame" x="136.33333333333334" y="208" width="120.66666666666666" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 touches detected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Fy-eY-74f">
+                                <rect key="frame" x="122.33333333333333" y="277" width="148.66666666666669" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Force Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6F-k0-eZu">
+                                <rect key="frame" x="152" y="346" width="89" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9Fy-eY-74f" firstAttribute="top" secondItem="NED-UI-Pcs" secondAttribute="bottom" constant="48" id="9Uf-2k-Z5Y"/>
+                            <constraint firstItem="u6F-k0-eZu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C0i-ZW-hjo"/>
+                            <constraint firstItem="NED-UI-Pcs" firstAttribute="top" secondItem="yKz-bD-xPK" secondAttribute="bottom" constant="48" id="PqZ-0J-KqC"/>
+                            <constraint firstItem="yKz-bD-xPK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Vgb-cw-X3b"/>
+                            <constraint firstItem="9Fy-eY-74f" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eUn-za-5o5"/>
+                            <constraint firstItem="NED-UI-Pcs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ioL-gI-yoC"/>
+                            <constraint firstItem="u6F-k0-eZu" firstAttribute="top" secondItem="9Fy-eY-74f" secondAttribute="bottom" constant="48" id="mKu-rC-Ypf"/>
+                            <constraint firstItem="yKz-bD-xPK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="z43-My-zGC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="txtForceLabel" destination="u6F-k0-eZu" id="fNe-2I-Cjn"/>
+                        <outlet property="txtStatus" destination="yKz-bD-xPK" id="Q7o-cs-0Ix"/>
+                        <outlet property="txtTapCounter" destination="u6F-k0-eZu" id="1mz-vf-MDB"/>
+                        <outlet property="txtTouchCounter" destination="9Fy-eY-74f" id="nNl-cZ-FMc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="100" y="-27"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
