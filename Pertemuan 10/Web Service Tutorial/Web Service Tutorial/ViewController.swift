@@ -41,13 +41,14 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
     
     private func getDataFromURL(from url: String){
+        
         URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: {data, response, error in
             guard let data = data, error == nil else{
                 print("something went wrong")
                 return
             }
             
-            //have data
+            //have data -> decode the json
             var result: Response?
             do{
                 result = try JSONDecoder().decode(Response.self, from:data)
@@ -55,6 +56,8 @@ class ViewController: UIViewController, UITableViewDataSource {
             }catch{
                 print("failed to convert the data \(error) ")
             }
+            
+            
             
             guard let json = result else{
                 return

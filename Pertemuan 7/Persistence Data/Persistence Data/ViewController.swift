@@ -10,25 +10,25 @@ import CoreData
 
 class ViewController: UIViewController {
     
-    // button add
-        let btnAdd: UIButton = {
-            let view = UIButton(type: .system)
-            view.setTitle("+", for: .normal)
-            view.setTitleColor(.white, for: .normal)
-            view.backgroundColor = .blue
-            DispatchQueue.main.async {
-                view.layer.cornerRadius = view.frame.width / 2
-            }
-            view.addTarget(self, action: #selector(showCreateForm), for: .touchDown)
-            return view
-        }()
+    // create button add
+    let btnAdd: UIButton = {
+        let view = UIButton(type: .system)
+        view.setTitle("+", for: .normal)
+        view.setTitleColor(.white, for: .normal)
+        view.backgroundColor = .blue
+        DispatchQueue.main.async {
+            view.layer.cornerRadius = view.frame.width / 2
+        }
+        view.addTarget(self, action: #selector(showCreateForm), for: .touchDown)
+        return view
+    }()
         
-        // tableview untuk menampilkan data
-        let tableUser: UITableView = {
-            let view = UITableView()
-            view.register(UITableViewCell.self, forCellReuseIdentifier: "UserCell")
-            return view
-        }()
+    // create tableview untuk menampilkan data
+    let tableUser: UITableView = {
+        let view = UITableView()
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "UserCell")
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,132 +40,120 @@ class ViewController: UIViewController {
     }
     
     // func buat setup view programmtically
-        func setupView(){
+    func setupView(){
+        // root
+        view.addSubview(tableUser)
+        view.addSubview(btnAdd)
             
-            // root
-            view.addSubview(tableUser)
-            view.addSubview(btnAdd)
+        // btnAdd
+        btnAdd.translatesAutoresizingMaskIntoConstraints = false
+        btnAdd.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        btnAdd.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
             
-            // btnAdd
-            btnAdd.translatesAutoresizingMaskIntoConstraints = false
-            btnAdd.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
-            btnAdd.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-            
-            // tableUser
-            tableUser.translatesAutoresizingMaskIntoConstraints = false
-            tableUser.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-            tableUser.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-            tableUser.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            tableUser.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            
-        }
+        // tableUser
+        tableUser.translatesAutoresizingMaskIntoConstraints = false
+        tableUser.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableUser.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableUser.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableUser.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
     
     // aksi button dari btnAdd
-        @objc func showCreateForm(){
+    @objc func showCreateForm(){
+        // membuat alert untuk menampilkan form
+        let alert = UIAlertController(title: "New", message: "Fill the form below to add new user", preferredStyle: .alert)
             
-            // membuat alert untuk menampilkan form
-            let alert = UIAlertController(title: "New", message: "Fill the form below to add new user", preferredStyle: .alert)
+        // membuat 3 textfield ke dalam alert
+        alert.addTextField(configurationHandler: {tf in
+            tf.placeholder = "First Name"
+        })
             
-            // membuat 3 textfield ke dalam alert
-            alert.addTextField(configurationHandler: {tf in
-                tf.placeholder = "First Name"
-            })
+        alert.addTextField(configurationHandler: {tf in
+            tf.placeholder = "Last Name"
+        })
             
-            alert.addTextField(configurationHandler: {tf in
-                tf.placeholder = "Last Name"
-            })
+        alert.addTextField(configurationHandler: {tf in
+            tf.placeholder = "Email"
+        })
             
-            alert.addTextField(configurationHandler: {tf in
-                tf.placeholder = "Email"
-            })
-            
-            alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
-                
-                // check if the textfield is empty
-                if alert.textFields![0].text!.isEmpty || alert.textFields![1].text!.isEmpty || alert.textFields![2].text!.isEmpty {
-                    let warning = UIAlertController(title: "Warning", message: "Fill all the textfields", preferredStyle: .alert)
-                    warning.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                    self.present(warning, animated: true)
-                }else{
-                    // call create method that i've created before
-                    self.create(alert.textFields![0].text!, alert.textFields![1].text!, alert.textFields![2].text!)
+        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
+            // check if the textfield is empty
+            if alert.textFields![0].text!.isEmpty || alert.textFields![1].text!.isEmpty || alert.textFields![2].text!.isEmpty {
+                let warning = UIAlertController(title: "Warning", message: "Fill all the textfields", preferredStyle: .alert)
+                warning.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self.present(warning, animated: true)
+            }else{
+                // call create method that i've created before
+                self.create(alert.textFields![0].text!, alert.textFields![1].text!, alert.textFields![2].text!)
+                let success = UIAlertController(title: "Success", message: "Data user added", preferredStyle: .alert)
+                success.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self.present(success, animated: true)
                     
-                    let success = UIAlertController(title: "Success", message: "Data user added", preferredStyle: .alert)
-                    success.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                    self.present(success, animated: true)
-                    
-                    // refresh data on tableUser
-                    self.tableUser.reloadData()
-                }
-                
-            }))
+                // refresh data on tableUser
+                self.tableUser.reloadData()
+            }
+        }))
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
-            self.present(alert, animated: true)
-        }
+        self.present(alert, animated: true)
+    }
         
-        // aksi click dari tableUserRow
-        @objc func showUpdateForm(_ firstName:String, _ lastName:String, _ email:String){
+    // aksi click dari tableUserRow
+    @objc func showUpdateForm(_ firstName:String, _ lastName:String, _ email:String){
+        // membuat alert untuk menampilkan form
+        let alert = UIAlertController(title: "Update", message: "Fill the form below to add update user", preferredStyle: .alert)
             
-            // membuat alert untuk menampilkan form
-            let alert = UIAlertController(title: "Update", message: "Fill the form below to add update user", preferredStyle: .alert)
+        // membuat 3 textfield ke dalam alert
+        alert.addTextField(configurationHandler: {tf in
+            tf.placeholder = "First Name"
+            tf.text = firstName
+        })
             
-            // membuat 3 textfield ke dalam alert
-            alert.addTextField(configurationHandler: {tf in
-                tf.placeholder = "First Name"
-                tf.text = firstName
-            })
+        alert.addTextField(configurationHandler: {tf in
+            tf.placeholder = "Last Name"
+            tf.text = lastName
+        })
             
-            alert.addTextField(configurationHandler: {tf in
-                tf.placeholder = "Last Name"
-                tf.text = lastName
-            })
+        alert.addTextField(configurationHandler: {tf in
+            tf.placeholder = "Email"
+            tf.text = email
+            tf.isEnabled = false
+        })
             
-            alert.addTextField(configurationHandler: {tf in
-                tf.placeholder = "Email"
-                tf.text = email
-                tf.isEnabled = false
-            })
-            
-            alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { action in
                 
-                // check if the textfield is empty
-                if alert.textFields![0].text!.isEmpty || alert.textFields![1].text!.isEmpty || alert.textFields![2].text!.isEmpty {
-                    let warning = UIAlertController(title: "Warning", message: "Fill all the textfields", preferredStyle: .alert)
-                    warning.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                    self.present(warning, animated: true)
-                }else{
-                    // call update method that i've created before
-                    self.update(alert.textFields![0].text!, alert.textFields![1].text!, alert.textFields![2].text!)
+            // check if the textfield is empty
+            if alert.textFields![0].text!.isEmpty || alert.textFields![1].text!.isEmpty || alert.textFields![2].text!.isEmpty {
+                let warning = UIAlertController(title: "Warning", message: "Fill all the textfields", preferredStyle: .alert)
+                warning.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self.present(warning, animated: true)
+            }else{
+                // call update method that i've created before
+                self.update(alert.textFields![0].text!, alert.textFields![1].text!, alert.textFields![2].text!)
                     
-                    let success = UIAlertController(title: "Success", message: "Data user updated", preferredStyle: .alert)
-                    success.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                    self.present(success, animated: true)
+                let success = UIAlertController(title: "Success", message: "Data user updated", preferredStyle: .alert)
+                success.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self.present(success, animated: true)
                     
-                    // refresh data on tableUser
-                    self.tableUser.reloadData()
-                }
-                
-            }))
+                // refresh data on tableUser
+                self.tableUser.reloadData()
+            }
+        }))
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            self.present(alert, animated: true)
-        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+    }
 
-
-    
     //insert data
     func create(_ firstName:String, _ lastName: String, _ email:String){
-        
-        //referensi ke AppDelegate
+        //referensi ke AppDelegate -> untuk tau app yg mana yg jalan
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        //managed context
+        //managed context -> untuk tau tampilan mana yg kebuka dan Database apa yang ada
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        //referensi entity yang telah dibuat sebelumnya
+        //referensi entity yang telah dibuat sebelumnya -> untuk tau table / entity yg mana
         let userEntity = NSEntityDescription.entity(forEntityName: "User", in: managedContext)
         
         //entity body
